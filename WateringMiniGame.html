@@ -1,0 +1,219 @@
+<html>
+    <head>
+        <title>Watering Mini Game</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+
+        <script>
+            // Plot Variables: [Stage,GrowingTimer,RottingTimer,DehydrationTimer]
+            var plot1Variables = [localStorage.getItem("Plot1Stage"),localStorage.getItem("Plot1Grow"),localStorage.getItem("Plot1Rot"),localStorage.getItem("Plot1Dehydrate")]
+
+            var plot2Variables = [localStorage.getItem("Plot2Stage"),localStorage.getItem("Plot2Grow"),localStorage.getItem("Plot2Rot"),localStorage.getItem("Plot2Dehydrate")]
+
+            var plot3Variables = [localStorage.getItem("Plot3Stage"),localStorage.getItem("Plot3Grow"),localStorage.getItem("Plot3Rot"),localStorage.getItem("Plot3Dehydrate")]
+
+            var plot4Variables = [localStorage.getItem("Plot4Stage"),localStorage.getItem("Plot4Grow"),localStorage.getItem("Plot4Rot"),localStorage.getItem("Plot4Dehydrate")]
+
+            var plot5Variables = [localStorage.getItem("Plot5Stage"),localStorage.getItem("Plot5Grow"),localStorage.getItem("Plot5Rot"),localStorage.getItem("Plot5Dehydrate")]
+
+            // Plot continuation
+            // Plot 1
+            if (plot1Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[1] > 0)) {
+                        plot1Variables[1] -= 1
+                        if ((plot1Variables[1] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[1] = 0
+                            plot1Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[2] > 0)) {
+                        plot1Variables[2] -= 1
+                        if ((plot1Variables [2] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[2] = 0
+                            plot1Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[3] > 0)) {
+                        plot1Variables[3] -= 1
+                        if ((plot1Variables [3] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[3] = 0
+                            plot1Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 2
+            if (plot2Variables[0] == "plant") {
+                let plot2Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[1] > 0)) {
+                        plot2Variables[1] -= 1
+                        if ((plot2Variables[1] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[1] = 0
+                            plot2Variables[0] = "grown"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[2] > 0)) {
+                        plot2Variables[2] -= 1
+                        if ((plot2Variables [2] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[2] = 0
+                            plot2Variables[0] = "rot"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[3] > 0)) {
+                        plot2Variables[3] -= 1
+                        if ((plot2Variables [3] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[3] = 0
+                            plot2Variables[0] = "rot"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                },1000)
+            }
+           
+            // Plot 3
+            if (plot3Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[1] > 0)) {
+                        plot3Variables[1] -= 1
+                        if ((plot3Variables[1] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[1] = 0
+                            plot3Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[2] > 0)) {
+                        plot3Variables[2] -= 1
+                        if ((plot3Variables [2] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[2] = 0
+                            plot3Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[3] > 0)) {
+                        plot3Variables[3] -= 1
+                        if ((plot3Variables [3] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[3] = 0
+                            plot3Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 4
+            if (plot4Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[1] > 0)) {
+                        plot4Variables[1] -= 1
+                        if ((plot4Variables[1] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[1] = 0
+                            plot4Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[2] > 0)) {
+                        plot4Variables[2] -= 1
+                        if ((plot4Variables [2] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[2] = 0
+                            plot4Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[3] > 0)) {
+                        plot4Variables[3] -= 1
+                        if ((plot4Variables [3] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[3] = 0
+                            plot4Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 5
+            if (plot5Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[1] > 0)) {
+                        plot5Variables[1] -= 1
+                        if ((plot5Variables[1] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[1] = 0
+                            plot5Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[2] > 0)) {
+                        plot5Variables[2] -= 1
+                        if ((plot5Variables [2] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[2] = 0
+                            plot5Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[3] > 0)) {
+                        plot5Variables[3] -= 1
+                        if ((plot5Variables [3] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[3] = 0
+                            plot5Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Going Back to the Game
+            function goToGame() {
+                // Saving all the changed data
+                // Plot 1
+                localStorage.setItem("Plot1Stage",plot1Variables[0])
+                localStorage.setItem("Plot1Grow",plot1Variables[1])
+                localStorage.setItem("Plot1Rot",plot1Variables[2])
+                localStorage.setItem("Plot1Dehydrate",plot1Variables[3])
+
+                // Plot 2
+                localStorage.setItem("Plot2Stage",plot2Variables[0])
+                localStorage.setItem("Plot2Grow",plot2Variables[1])
+                localStorage.setItem("Plot2Rot",plot2Variables[2])
+                localStorage.setItem("Plot2Dehydrate",plot2Variables[3])
+
+                // Plot 3
+                localStorage.setItem("Plot3Stage",plot3Variables[0])
+                localStorage.setItem("Plot3Grow",plot3Variables[1])
+                localStorage.setItem("Plot3Rot",plot3Variables[2])
+                localStorage.setItem("Plot3Dehydrate",plot3Variables[3])
+
+                // Plot 4
+                localStorage.setItem("Plot4Stage",plot4Variables[0])
+                localStorage.setItem("Plot4Grow",plot4Variables[1])
+                localStorage.setItem("Plot4Rot",plot4Variables[2])
+                localStorage.setItem("Plot4Dehydrate",plot4Variables[3])
+
+                // Plot 5
+                localStorage.setItem("Plot5Stage",plot5Variables[0])
+                localStorage.setItem("Plot5Grow",plot5Variables[1])
+                localStorage.setItem("Plot5Rot",plot5Variables[2])
+                localStorage.setItem("Plot5Dehydrate",plot5Variables[3])
+
+                // Going to the Game
+                location.href = "Game.html"
+            }
+        </script>
+    </body>
+</html>
