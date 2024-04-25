@@ -84,11 +84,20 @@ function newSave() {
     localStorage.setItem("Plot5Rot",null)
     localStorage.setItem("Plot5Dehydrate",null)
 
+    // Water Variables
+    localStorage.setItem("WaterAmount",100)
+    localStorage.setItem("WaterCapacity",100)
+    localStorage.setItem("WaterGain",2)
+
+    // Upgraded Variables
+    localStorage.setItem("Upgrades","")
+
     location.href = "Game.html"
 }
 
 // Plot variables: [Stage,GrowingTimer,RottingTimer,DehydrationTimer,TypeofPlant]
 function saveProgress() {
+    // Plot Variables
     for (let plot of plotList) {
         if (plot.id == 1) {
             localStorage.setItem("Plot1Stage",plot.stage)
@@ -121,6 +130,13 @@ function saveProgress() {
             localStorage.setItem("Plot5Dehydrate",plot.dehydrateTime)
         }
     }
+
+    // Water Variables
+    localStorage.setItem("WaterAmount",waterCan.water)
+    localStorage.setItem("WaterCapacity",waterCan.waterCapacity)
+
+    // Upgrade Variables
+    localStorage.setItem("Upgrades",UpgradeList)
 }
 
 // Work on custom settings
@@ -139,6 +155,12 @@ var plot3Variables = [localStorage.getItem("Plot3Stage"),localStorage.getItem("P
 var plot4Variables = [localStorage.getItem("Plot4Stage"),localStorage.getItem("Plot4Grow"),localStorage.getItem("Plot4Rot"),localStorage.getItem("Plot4Dehydrate")]
 
 var plot5Variables = [localStorage.getItem("Plot5Stage"),localStorage.getItem("Plot5Grow"),localStorage.getItem("Plot5Rot"),localStorage.getItem("Plot5Dehydrate")]
+
+var waterAmount = localStorage.getItem("WaterAmount")
+var waterCapacity = localStorage.getItem("WaterCapacity")
+
+let upgradeText = localStorage.getItem("Upgrades")
+var upgradeList = upgradeText.split(",")
 
 console.log(plot1Variables,plot2Variables,plot3Variables,plot4Variables,plot5Variables)
 
@@ -1011,7 +1033,8 @@ for (let i = 0; i < 5; i += 1) {
                     this.stage = "plant"
                     this.canRot = true
                     this.dehydrateTimeSet = false
-                    waterCan.water -= 2
+                    waterCan.water -= waterCan.waterUsage
+                    console.log("Water Amount:",waterCan.water,"Water Capacity:",waterCan.waterCapacity)
                 }
             }
         }
@@ -1075,7 +1098,8 @@ function Hose() {
     this.fillWater = function() {
         let c = collideRectCircle(this.x + 25,this.y - 25,this.width,this.height,player.x,player.y,player.radius)
         if ((c == true) && (player.item.includes("Watering Can")) && (keyIsDown(90)) && (waterCan.water < waterCan.waterCapacity)) {
-            console.log("Water")
+            saveProgress()
+            location.href = "WateringMiniGame.html"
         }
     }
 }
@@ -1220,8 +1244,8 @@ function WateringCan() {
     this.y = table.y + 15
     this.tableX = this.x
     this.tableY = this.y
-    this.water = 100
-    this.waterCapacity = 100
+    this.water = waterAmount
+    this.waterCapacity = waterCapacity
     this.waterUsage = 5
 
     // Showing the watering can
@@ -1278,10 +1302,10 @@ function WateringCan() {
 // Kat
 function Kat() {
     // Kat variables
-    this.x = 50
-    this.y = 50
     this.startX = 50
-    this.startY = 50
+    this.startY = h/2
+    this.x = this.startX
+    this.y = this.startY
     this.width = 100
     this.height = 50
     this.target = "none"
@@ -1463,6 +1487,26 @@ function goToGame() {
     location.href = "Game.html"
 }
 
+// Checking to see if the item image is correct
+function itemImageCheck() {
+    if (player.item.length == 0) {
+        document.getElementById("ItemPicture").style.backgroundImage = "none"
+        document.getElementById("Status").style.height = 150
+        document.getElementById("Water").innerHTML = ""
+    }
+    if (player.item[0] == "Watering Can") {
+        document.getElementById("ItemPicture").style.backgroundImage = "url('Watering Can.png')"
+        document.getElementById("Water").innerHTML = "Water: " + waterCan.water
+        document.getElementById("Status").style.height = 175
+    }
+    if (player.item[0] == "Clipper") {
+        document.getElementById("ItemPicture").style.backgroundImage = "url('Clipper.png')"
+    }
+    if (player.item[0] == "Glove") {
+        document.getElementById("ItemPicture").style.backgroundImage = "url('Gloves.png')"
+    }
+}
+
 // Draw Function
 function draw() {
     // Clear everything
@@ -1508,4 +1552,7 @@ function draw() {
     waterCan.show()
     waterCan.pickUp()
     waterCan.dropItem()
+
+    // Image function
+    itemImageCheck()
 }
