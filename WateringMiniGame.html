@@ -36,7 +36,7 @@
             h = window.innerHeight
             let canPlay = 1
             let waterAmount = parseInt(localStorage.getItem("WaterAmount"))
-            let waterCapacity = localStorage.getItem("WaterCapacity")
+            let waterCapacity = parseInt(localStorage.getItem("WaterCapacity"))
 
             // Object Variables
             let player;
@@ -137,7 +137,7 @@
                 clear()
 
                 // Showing Water
-                document.getElementById("WaterIndicator").innerHTML = "Water: " + waterAmount
+                document.getElementById("WaterIndicator").innerHTML = "Water: " + waterAmount + "/" + waterCapacity
                 
                 // Player Functions
                 player.show()
@@ -160,15 +160,15 @@
             // Changing Plot Variables
 
             // Plot Variables: [Stage,GrowingTimer,RottingTimer,DehydrationTimer]
-            var plot1Variables = [localStorage.getItem("Plot1Stage"),localStorage.getItem("Plot1Grow"),localStorage.getItem("Plot1Rot"),localStorage.getItem("Plot1Dehydrate")]
+            var plot1Variables = [localStorage.getItem("Plot1Stage"),parseInt(localStorage.getItem("Plot1Grow")),parseInt(localStorage.getItem("Plot1Rot")),parseInt(localStorage.getItem("Plot1Dehydrate"))]
 
-            var plot2Variables = [localStorage.getItem("Plot2Stage"),localStorage.getItem("Plot2Grow"),localStorage.getItem("Plot2Rot"),localStorage.getItem("Plot2Dehydrate")]
+            var plot2Variables = [localStorage.getItem("Plot2Stage"),parseInt(localStorage.getItem("Plot2Grow")),parseInt(localStorage.getItem("Plot2Rot")),parseInt(localStorage.getItem("Plot2Dehydrate"))]
 
-            var plot3Variables = [localStorage.getItem("Plot3Stage"),localStorage.getItem("Plot3Grow"),localStorage.getItem("Plot3Rot"),localStorage.getItem("Plot3Dehydrate")]
+            var plot3Variables = [localStorage.getItem("Plot3Stage"),parseInt(localStorage.getItem("Plot3Grow")),parseInt(localStorage.getItem("Plot3Rot")),parseInt(localStorage.getItem("Plot3Dehydrate"))]
 
-            var plot4Variables = [localStorage.getItem("Plot4Stage"),localStorage.getItem("Plot4Grow"),localStorage.getItem("Plot4Rot"),localStorage.getItem("Plot4Dehydrate")]
+            var plot4Variables = [localStorage.getItem("Plot4Stage"),parseInt(localStorage.getItem("Plot4Grow")),parseInt(localStorage.getItem("Plot4Rot")),parseInt(localStorage.getItem("Plot4Dehydrate"))]
 
-            var plot5Variables = [localStorage.getItem("Plot5Stage"),localStorage.getItem("Plot5Grow"),localStorage.getItem("Plot5Rot"),localStorage.getItem("Plot5Dehydrate")]
+            var plot5Variables = [localStorage.getItem("Plot5Stage"),parseInt(localStorage.getItem("Plot5Grow")),parseInt(localStorage.getItem("Plot5Rot")),parseInt(localStorage.getItem("Plot5Dehydrate"))]
 
             // Plot continuation
             // Plot 1
@@ -195,7 +195,7 @@
                         plot1Variables[3] -= 1
                         if ((plot1Variables [3] <= 0) && (plot1Variables[0] == "plant")) {
                             plot1Variables[3] = 0
-                            plot1Variables[0] = "rot"
+                            plot1Variables[0] = "dehydrate"
                             clearInterval(plot1Timer)
                         }
                     }
@@ -226,7 +226,7 @@
                         plot2Variables[3] -= 1
                         if ((plot2Variables [3] <= 0) && (plot2Variables[0] == "plant")) {
                             plot2Variables[3] = 0
-                            plot2Variables[0] = "rot"
+                            plot2Variables[0] = "dehydrate"
                             clearInterval(plot2Timer)
                         }
                     }
@@ -257,7 +257,7 @@
                         plot3Variables[3] -= 1
                         if ((plot3Variables [3] <= 0) && (plot3Variables[0] == "plant")) {
                             plot3Variables[3] = 0
-                            plot3Variables[0] = "rot"
+                            plot3Variables[0] = "dehydrate"
                             clearInterval(plot1Timer)
                         }
                     }
@@ -288,7 +288,7 @@
                         plot4Variables[3] -= 1
                         if ((plot4Variables [3] <= 0) && (plot4Variables[0] == "plant")) {
                             plot4Variables[3] = 0
-                            plot4Variables[0] = "rot"
+                            plot4Variables[0] = "dehydrate"
                             clearInterval(plot1Timer)
                         }
                     }
@@ -319,7 +319,7 @@
                         plot5Variables[3] -= 1
                         if ((plot5Variables [3] <= 0) && (plot5Variables[0] == "plant")) {
                             plot5Variables[3] = 0
-                            plot5Variables[0] = "rot"
+                            plot5Variables[0] = "dehydrate"
                             clearInterval(plot1Timer)
                         }
                     }
