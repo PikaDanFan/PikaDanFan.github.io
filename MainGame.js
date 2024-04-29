@@ -33,6 +33,7 @@ let grownImage;
 let rotImage;
 let hoseImage;
 let katImage;
+let sleepKatImage
 
 // Preload
 function preload() {
@@ -48,6 +49,7 @@ function preload() {
     rotImage = loadImage("Rot.png")
     hoseImage = loadImage("Hose.png")
     katImage = loadImage("Kat.png")
+    sleepKatImage = loadImage("Sleeping Kat.png")
 }
 
 // Setup
@@ -108,7 +110,7 @@ function newSave() {
     // Making sure you played the game already
     localStorage.setItem("Played",'Yes')
 
-    location.href = "Game.html"
+    location.href = "Tutorial.html"
 }
 
 // Plot variables: [Stage,GrowingTimer,RottingTimer,DehydrationTimer,TypeofPlant]
@@ -157,11 +159,6 @@ function saveProgress() {
 
     // Upgrade Variables
     localStorage.setItem("Upgrades",upgradeList)
-}
-
-// Work on custom settings
-function Settings() {
-    console.log("Settings")
 }
 
 // Load everything
@@ -879,7 +876,7 @@ for (let i = 0; i < 5; i += 1) {
         this.plant = function() {
             if (this.stage != "grown") {
                 let c = collideRectCircle(this.x - this.width/5,this.y - this.width/5,this.width + (this.width/5 * 2),this.height + (this.width/5 * 2),player.x,player.y,player.radius)
-                if ((c == true) && (keyIsDown(90)) && (this.stage == "plot")) {
+                if ((c == true) && (keyIsDown(74)) && (this.stage == "plot")) {
                     this.stage = "plant"
                 }
 
@@ -972,7 +969,7 @@ for (let i = 0; i < 5; i += 1) {
                 }
 
                 // If the player has clippers and the plant is rotting, return to normal
-                if ((this.stage == "rot") && (c == true) && (keyIsDown(90)) && (player.item.includes("Clipper"))) {
+                if ((this.stage == "rot") && (c == true) && (keyIsDown(74)) && (player.item.includes("Clipper"))) {
                     this.stage = "plant"
                     this.canDehydrate = true
                     this.rotTimeSet = false
@@ -1053,7 +1050,7 @@ for (let i = 0; i < 5; i += 1) {
                 }
 
                 // If the player has watering can and the plant is dehydrating, return to normal
-                if ((this.stage == "dehydrate") && (c == true) && (keyIsDown(90)) && (player.item.includes("Watering Can")) && (waterCan.water - waterCan.waterUsage >= 0)) {
+                if ((this.stage == "dehydrate") && (c == true) && (keyIsDown(74)) && (player.item.includes("Watering Can")) && (waterCan.water - waterCan.waterUsage >= 0)) {
                     this.stage = "plant"
                     this.canRot = true
                     this.dehydrateTimeSet = false
@@ -1113,6 +1110,7 @@ function ToolTable() {
     }
 }
 
+// Hose
 function Hose() {
     this.width = 100
     this.height = 100
@@ -1125,7 +1123,7 @@ function Hose() {
 
     this.fillWater = function() {
         let c = collideRectCircle(this.x + 25,this.y - 25,this.width,this.height,player.x,player.y,player.radius)
-        if ((c == true) && (player.item.includes("Watering Can")) && (keyIsDown(90)) && (waterCan.water < waterCan.waterCapacity)) {
+        if ((c == true) && (player.item.includes("Watering Can")) && (keyIsDown(74)) && (waterCan.water < waterCan.waterCapacity)) {
             saveProgress()
             location.href = "WateringMiniGame.html"
         }
@@ -1172,7 +1170,7 @@ function Clippers() {
     // Pick up the clipper
     this.pickUp = function() {
         let c = collideRectCircle(this.x,this.y,this.width,this.height,player.x,player.y,player.radius)
-        if (((c == true) || (dist(this.x + this.width/2,this.y + this.height/2,player.x,player.y) <= 125)) && (keyIsDown(88)) && (this.picked == false) && (player.canDrop == false) && (player.item.length == 0)) {
+        if (((c == true) || (dist(this.x + this.width/2,this.y + this.height/2,player.x,player.y) <= 125)) && (keyIsDown(75)) && (this.picked == false) && (player.canDrop == false) && (player.item.length == 0)) {
             this.picked = true
             this.picker = "player"
             player.item.push("Clipper")
@@ -1183,7 +1181,7 @@ function Clippers() {
     
     // Drop the clipper
     this.dropItem = function() {
-        if ((player.canDrop == true) && (this.picked == true) && (keyIsDown(88)) && (player.item.includes("Clipper"))) {
+        if ((player.canDrop == true) && (this.picked == true) && (keyIsDown(75)) && (player.item.includes("Clipper"))) {
             let clipperIndex = player.item.indexOf("Clipper")
             player.item.splice(clipperIndex,1)
             this.picked = false
@@ -1236,7 +1234,7 @@ function Gloves() {
     // Pick up the gloves
     this.pickUp = function() {
         let c = collideRectCircle(this.x,this.y,this.width,this.height,player.x,player.y,player.radius)
-        if (((c == true) || (dist(this.x + this.width/2,this.y + this.height/2,player.x,player.y) <= 125)) && (keyIsDown(88)) && (this.picked == false) && (player.canDrop == false) && (player.item.length == 0)) {
+        if (((c == true) || (dist(this.x + this.width/2,this.y + this.height/2,player.x,player.y) <= 125)) && (keyIsDown(75)) && (this.picked == false) && (player.canDrop == false) && (player.item.length == 0)) {
             this.picked = true
             this.picker = "player"
             player.item.push("Glove")
@@ -1247,7 +1245,7 @@ function Gloves() {
     
     // Drop the gloves
     this.dropItem = function() {
-        if ((player.canDrop == true) && (this.picked == true) && (keyIsDown(88)) && (player.item.includes("Glove"))) {
+        if ((player.canDrop == true) && (this.picked == true) && (keyIsDown(75)) && (player.item.includes("Glove"))) {
             let gloveIndex = player.item.indexOf("Glove")
             player.item.splice(gloveIndex,1)
             this.picked = false
@@ -1302,7 +1300,7 @@ function WateringCan() {
     // Pick up the watering can
     this.pickUp = function() {
         let c = collideRectCircle(this.x,this.y,this.width,this.height,player.x,player.y,player.radius)
-        if (((c == true) || (dist(this.x + this.width/2,this.y + this.height/2,player.x,player.y) <= 125)) && (keyIsDown(88)) && (this.picked == false) && (player.canDrop == false) && (player.item.length == 0)) {
+        if (((c == true) || (dist(this.x + this.width/2,this.y + this.height/2,player.x,player.y) <= 125)) && (keyIsDown(75)) && (this.picked == false) && (player.canDrop == false) && (player.item.length == 0)) {
             this.picked = true
             this.picker = "player"
             player.item.push("Watering Can")
@@ -1313,7 +1311,7 @@ function WateringCan() {
     
     // Drop the watering can
     this.dropItem = function() {
-        if ((player.canDrop == true) && (this.picked == true) && (keyIsDown(88)) && (player.item.includes("Watering Can"))) {
+        if ((player.canDrop == true) && (this.picked == true) && (keyIsDown(75)) && (player.item.includes("Watering Can"))) {
             let gloveIndex = player.item.indexOf("Watering Can")
             player.item.splice(gloveIndex,1)
             this.picked = false
@@ -1344,6 +1342,7 @@ function Kat() {
     this.justDropped = false
     this.canPickUp = true
     this.retreat = false
+    this.moving = false
 
     // Show function
     this.show = function() {
@@ -1359,7 +1358,12 @@ function Kat() {
             this.x = waterCan.x - (this.width/4*3)
             this.y = waterCan.y - this.height/2
         }
-        image(katImage,this.x,this.y,this.width,this.height)
+        if (this.moving == true) {
+            image(katImage,this.x,this.y,this.width,this.height)
+        }
+        if (this.moving == false) {
+            image(sleepKatImage,this.x,this.y,this.width,this.height)
+        }
     }
     
     // Picking up items function
@@ -1370,6 +1374,7 @@ function Kat() {
                 this.x = this.startX
                 this.y = this.startY
                 this.retreat = false
+                this.moving = false
             }
             this.x = lerp(this.x,this.startX,0.03)
             this.y = lerp(this.y,this.startY,0.03)
@@ -1393,6 +1398,7 @@ function Kat() {
                 this.clipperTimer = setTimeout(() => {
                     this.canGo = true
                     this.target = "clipper"
+                    this.moving = true
                 },10000)
             }
 
@@ -1429,6 +1435,7 @@ function Kat() {
                 this.gloveTimer = setTimeout(() => {
                     this.canGo = true
                     this.target = "glove"
+                    this.moving = true
                 },10000)
             }
 
@@ -1464,6 +1471,7 @@ function Kat() {
                 this.waterCanTimer = setTimeout(() => {
                     this.canGo = true
                     this.target = "waterCan"
+                    this.moving = true
                 },10000)
             }
 
@@ -1498,6 +1506,7 @@ function Kat() {
                 this.timerSet = "none"
                 this.canPickUp = true
                 this.retreat = false
+                this.moving = false
             }
         }
     }
@@ -1608,6 +1617,12 @@ function checkUpgrades() {
 function showMoneyAndLemon() {
     document.getElementById("Money").innerHTML = "Money: $" + money
     document.getElementById("Lemon").innerHTML = "Lemon: " + lemon
+}
+
+// Go to the Tutorial
+function Tutorial() {
+    saveProgress()
+    location.href = "Tutorial.html"
 }
 
 // Draw Function
