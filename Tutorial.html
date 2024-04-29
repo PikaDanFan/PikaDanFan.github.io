@@ -1,0 +1,348 @@
+<html>
+    <head>
+        <title>Tutorial</title>
+        <style>
+            body {
+                padding: 0px;
+                margin: 0px;
+                overflow-x: hidden;
+            }
+            #TutorialDIV {
+                width: 98vw;
+                border-width: 1vw;
+                border-style: groove;
+                border-color: firebrick;
+                background-color: crimson;
+            }
+            h1 {
+                margin: 10px;
+                text-decoration: underline;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 30px;
+            }
+            h2 {
+                margin: 10px;
+                text-decoration: underline;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 25px;
+            }
+            p {
+                margin: 10px;
+                text-indent: 30px;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 20px;
+                line-height: 35px;
+            }
+            span {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 20px;
+                text-decoration: underline;
+                font-weight: bold;
+            }
+            .Image {
+                width: 100px;
+                height: 100px;
+                border-style: groove;
+                border-color: firebrick;
+                border-width: 10px;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-color: white;
+            }
+            #ImageDIV {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+            }
+            #PlotImage {
+                background-image: url("Plot.png");
+            }
+            #PlantImage {
+                background-image: url("Growing.png");
+            }
+            #RotImage {
+                background-image: url("Rot.png");
+            }
+            #DehydrateImage {
+                background-image: url("Dehydrate.png");
+            }
+            #GrownImage {
+                background-image: url("Grown.png");
+            }
+            #ClipperImage {
+                background-image: url("Clipper.png");
+            }
+            #WaterCanImage {
+                background-image: url("Watering Can.png");
+            }
+            #GlovesImage {
+                background-image: url("Gloves.png");
+            }
+            #HoseImage {
+                background-image: url("Hose.png");
+            }
+            #KatImage {
+                background-image: url("Kat.png");
+                margin-bottom: 15px;
+            }
+            #GoToGame {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-size: 40px;
+                border-width: 5px;
+                border-color: grey;
+                background-color: rgb(85, 85, 85);
+                color: white;
+            }
+        </style>
+    </head>
+    <body onunload = "saveProgress()">
+        <button id = "GoToGame" onclick = "goToGame()">Go to Game</button>
+        <div id = "TutorialDIV">
+            <div class = "TextDIV" id = "HowToPlayDIV">
+                <h1 class = "Title">How to Play</h1>
+                <p><span>WASD</span> or <span>arrow keys</span> to move. Your <span>goal</span> is to get <span>500 lemons</span>. Start by planting lemon sapplings in the unused plots and wait for them to grow. They won't always immediately grow into a full lemon so you'd have to take care of it and make sure that your lemons don't get messed up. Make sure to use your resources carefully and to take care of your plants as fast as you can. Check your <span>status</span> on the <span>top left corner</span> to see how much resources you have.</p>
+            </div>
+
+            <div class = "TextDIV" id = "PlantStageDIV">
+                <h1 class = "Title">Plants and How They Work</h1>
+                <p>There are five plots that are avaiable, press the <span>J key</span> to put a lemon sappling in. Plants have 3 stages that they go through. First is <span>overgrown</span> where you'd have to use a <span>clipper</span> to clip off all the overgrowing weed. Second is <span>dehydrated</span> where you'd have to use a <span>watering can</span> to hydrate the plant again. Third is <span>fully grown</span> where you use your <span>gardening gloves</span> to harvest the full grown lemon. The button to interact with these plants is the <span>J key</span> The way that they go from one stage to another is <span>completely random</span> so just know that there is a chance of you getting a full grown lemon without having to take care of it at all, but there is also a chance of you having to take extra care of a lemon sappling before it can fully grow.</p>
+                <div id = "ImageDIV">
+                    <div class = "Image" id = "PlotImage"></div>
+                    <div class = "Image" id = "PlantImage"></div>
+                    <div class = "Image" id = "RotImage"></div>
+                    <div class = "Image" id = "DehydrateImage"></div>
+                    <div class = "Image" id = "GrownImage"></div>
+                </div>
+            </div>
+
+            <div class = "TextDIV" id = "ItemDIV">
+                <h1 class = "Title">Items and How to Use Them</h1>
+                <p>In order to pick up items you have to press the <span>K key</span>. <span>Clippers</span> are used to fix overgrown plants and are <span>unlimited</span>. The <span>watering can</span> is used to fix dehydrated plants and are <span>limited</span> and need to be refueled at the <span>watering hose</span>. The <span>gardening gloves</span> are used to harvest full grown lemons. Use the <span>J key</span> while holding the correct item to fix the plants. Use the <span>L key</span> to harvest full grown lemons. Use the <span>K key</span> while holding an item to drop it anywhere.</p>
+                <div id = "ImageDIV">
+                    <div class = "Image" id = "ClipperImage"></div>
+                    <div class = "Image" id = "WaterCanImage"></div>
+                    <div class = "Image" id = "GlovesImage"></div>
+                </div>
+            </div>
+
+            <div class = "TextDIV" id = "ExtraDIV">
+                <h1 class = "Title">Extra Things to Know</h1>
+                <p>If you leave your items on the floor, a cat would come to pick up the item and return it to the place it belongs. When your watering can is under 100% then go to the watering hose <span>while holding your watering can</span> and press the <span>J key</span> to get taken to a mini game where you will fill up your water.</p>
+                <div id = "ImageDIV">
+                    <div class = "Image" id = "KatImage"></div>
+                    <div class = "Image" id = "HoseImage"></div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Plot Variables: [Stage,GrowingTimer,RottingTimer,DehydrationTimer]
+            var plot1Variables = [localStorage.getItem("Plot1Stage"),parseInt(localStorage.getItem("Plot1Grow")),parseInt(localStorage.getItem("Plot1Rot")),parseInt(localStorage.getItem("Plot1Dehydrate"))]
+
+            var plot2Variables = [localStorage.getItem("Plot2Stage"),parseInt(localStorage.getItem("Plot2Grow")),parseInt(localStorage.getItem("Plot2Rot")),parseInt(localStorage.getItem("Plot2Dehydrate"))]
+
+            var plot3Variables = [localStorage.getItem("Plot3Stage"),parseInt(localStorage.getItem("Plot3Grow")),parseInt(localStorage.getItem("Plot3Rot")),parseInt(localStorage.getItem("Plot3Dehydrate"))]
+
+            var plot4Variables = [localStorage.getItem("Plot4Stage"),parseInt(localStorage.getItem("Plot4Grow")),parseInt(localStorage.getItem("Plot4Rot")),parseInt(localStorage.getItem("Plot4Dehydrate"))]
+
+            var plot5Variables = [localStorage.getItem("Plot5Stage"),parseInt(localStorage.getItem("Plot5Grow")),parseInt(localStorage.getItem("Plot5Rot")),parseInt(localStorage.getItem("Plot5Dehydrate"))]
+
+            // Plot continuation
+            // Plot 1
+            if (plot1Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[1] > 0)) {
+                        plot1Variables[1] -= 1
+                        if ((plot1Variables[1] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[1] = 0
+                            plot1Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[2] > 0)) {
+                        plot1Variables[2] -= 1
+                        if ((plot1Variables [2] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[2] = 0
+                            plot1Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[3] > 0)) {
+                        plot1Variables[3] -= 1
+                        if ((plot1Variables [3] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[3] = 0
+                            plot1Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 2
+            if (plot2Variables[0] == "plant") {
+                let plot2Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[1] > 0)) {
+                        plot2Variables[1] -= 1
+                        if ((plot2Variables[1] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[1] = 0
+                            plot2Variables[0] = "grown"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[2] > 0)) {
+                        plot2Variables[2] -= 1
+                        if ((plot2Variables [2] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[2] = 0
+                            plot2Variables[0] = "rot"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[3] > 0)) {
+                        plot2Variables[3] -= 1
+                        if ((plot2Variables [3] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[3] = 0
+                            plot2Variables[0] = "dehydrate"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                },1000)
+            }
+           
+            // Plot 3
+            if (plot3Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[1] > 0)) {
+                        plot3Variables[1] -= 1
+                        if ((plot3Variables[1] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[1] = 0
+                            plot3Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[2] > 0)) {
+                        plot3Variables[2] -= 1
+                        if ((plot3Variables [2] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[2] = 0
+                            plot3Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[3] > 0)) {
+                        plot3Variables[3] -= 1
+                        if ((plot3Variables [3] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[3] = 0
+                            plot3Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 4
+            if (plot4Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[1] > 0)) {
+                        plot4Variables[1] -= 1
+                        if ((plot4Variables[1] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[1] = 0
+                            plot4Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[2] > 0)) {
+                        plot4Variables[2] -= 1
+                        if ((plot4Variables [2] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[2] = 0
+                            plot4Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[3] > 0)) {
+                        plot4Variables[3] -= 1
+                        if ((plot4Variables [3] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[3] = 0
+                            plot4Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 5
+            if (plot5Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[1] > 0)) {
+                        plot5Variables[1] -= 1
+                        if ((plot5Variables[1] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[1] = 0
+                            plot5Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[2] > 0)) {
+                        plot5Variables[2] -= 1
+                        if ((plot5Variables [2] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[2] = 0
+                            plot5Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[3] > 0)) {
+                        plot5Variables[3] -= 1
+                        if ((plot5Variables [3] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[3] = 0
+                            plot5Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Going Back to the Game
+            function saveProgress() {
+                // Saving all the changed data
+                // Plot 1
+                localStorage.setItem("Plot1Stage",plot1Variables[0])
+                localStorage.setItem("Plot1Grow",plot1Variables[1])
+                localStorage.setItem("Plot1Rot",plot1Variables[2])
+                localStorage.setItem("Plot1Dehydrate",plot1Variables[3])
+
+                // Plot 2
+                localStorage.setItem("Plot2Stage",plot2Variables[0])
+                localStorage.setItem("Plot2Grow",plot2Variables[1])
+                localStorage.setItem("Plot2Rot",plot2Variables[2])
+                localStorage.setItem("Plot2Dehydrate",plot2Variables[3])
+
+                // Plot 3
+                localStorage.setItem("Plot3Stage",plot3Variables[0])
+                localStorage.setItem("Plot3Grow",plot3Variables[1])
+                localStorage.setItem("Plot3Rot",plot3Variables[2])
+                localStorage.setItem("Plot3Dehydrate",plot3Variables[3])
+
+                // Plot 4
+                localStorage.setItem("Plot4Stage",plot4Variables[0])
+                localStorage.setItem("Plot4Grow",plot4Variables[1])
+                localStorage.setItem("Plot4Rot",plot4Variables[2])
+                localStorage.setItem("Plot4Dehydrate",plot4Variables[3])
+
+                // Plot 5
+                localStorage.setItem("Plot5Stage",plot5Variables[0])
+                localStorage.setItem("Plot5Grow",plot5Variables[1])
+                localStorage.setItem("Plot5Rot",plot5Variables[2])
+                localStorage.setItem("Plot5Dehydrate",plot5Variables[3])
+            }
+
+            function goToGame() {
+                saveProgress()
+                location.href = "Game.html"
+            }
+        </script>
+    </body>
+</html>
