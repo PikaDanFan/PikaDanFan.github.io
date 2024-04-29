@@ -26,25 +26,14 @@
                 background-color: rgb(85, 85, 85);
                 color: white;
             }
-            #settingButton {
-                position: absolute;
-                right: 10px;
-                top: 10px;
-                width: 100px;
-                height: 100px;
-                background-color: rgb(112, 112, 112);
-                border-style: solid;
-                border-color: black;
-                border-width: 3px;
-            }
             #ShowInfo {
                 position: absolute;
                 left: 10px;
                 top: 5px;
-                width: 150px;
+                width: 154px;
                 height: 15px;
                 background-color: grey;
-                border-width: 1px;
+                border-width: 2px;
                 line-height: 1px;
                 color: black;
                 visibility: visible;
@@ -53,10 +42,10 @@
                 position: absolute;
                 left: 10px;
                 top: 5px;
-                width: 150px;
+                width: 154px;
                 height: 15px;
                 background-color: grey;
-                border-width: 1px;
+                border-width: 2px;
                 line-height: 1px;
                 color: black;
                 visibility: hidden;
@@ -69,6 +58,8 @@
                 height: 150;
                 background-color: grey;
                 visibility: hidden;
+                border-width: 2px;
+                border-style: solid;
             }
             #ItemPicture {
                 position: absolute;
@@ -91,10 +82,20 @@
                 top: 90px;
                 left: 10px;
             }
+            #tutorialButton {
+                width: 75px;
+                height: 75px;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background-image: url("Help.png");
+                background-color: transparent;
+                border-style: none;
+            }
         </style>
     </head>
     <body onunload = "saveProgress()">
-        <button id = "settingButton" onclick = "Settings()"></button>
+        <button id = "tutorialButton" onclick = "Tutorial()"></button>
         <div id = "settings">
 
         </div>
