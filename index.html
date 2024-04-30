@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Starting Page</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+            #BackgroundDIV {
+                height: 100vh;
+                width: 100vw;
+                background-image: url("Lemon Background.png");
+            }
+            #BackgroundImage {
+                background-image: url("Starting Background.png");
+                height: 60;
+                width: 500;
+                transform: 
+                    translate(-50%,-100%)
+                    scale(1.5,1.5);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+            #buttonDIV {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                width: 350px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,50%)
+            }
+            button {
+                width: 150px;
+                height: 75px;
+                background-color:gold;
+                border-color:darkgoldenrod;
+                border-style: groove;
+                border-width: 10px;
+                border-radius: 10px;
+                color: black;
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-size: 20px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body onload = "checkForSave()">
+        <div id = "BackgroundDIV">
+            <div id = "BackgroundImage"></div>
+            <div id = "ButtonDiv">
+                <button id = "newSave" onclick = "newSave()">New Save File</button>
+                <button id = "continue" onclick = "GoToGame()">Continue Game</button>
+            </div>
+        </div>
+
+        <script>
+            function GoToGame() {
+                location.href = "Game.html"
+            }
+        </script>
+        <script src="MainGame.js"></script> 
+    </body>
+</html>

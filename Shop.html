@@ -1,0 +1,1169 @@
+<html>
+    <head>
+        <title>Shop</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            body {
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                background-color: coral;
+            }
+            #BackButton {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                font-size: 40px;
+                border-width: 5px;
+                border-color: grey;
+                background-color: rgb(85, 85, 85);
+                color: white;
+            }
+            #Information {
+                background-color: brown;
+                width: 15vw;
+                height: 100vh;
+                border-right-width: 10px;
+                border-right-color: rgb(202, 31, 31);
+                border-right-style: groove;
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-size: 15px;
+            }
+            #InfoStuff {
+                position: absolute;
+                top: 60px;
+                left: 5px;
+                width: 15vw;
+            }
+            #ShopItems {
+                position: absolute;
+                right: 5vw;
+                top: 20px;
+                width: 75vw;
+                height: 100vh;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .ItemDIV {
+                width: 30%;
+                height: 35%;
+                border-style: solid;
+                border-color: black;
+                border-radius: 10px;
+                background-color: whitesmoke;
+                text-align: center;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 15px;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .ItemDIV:hover {
+                background-color: darkgray;
+            }
+            button {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 15px;
+            }
+            .BuyButton {
+                width: 100px;
+                height: 35px;
+                font-weight: bold;
+                border-radius: 10px;
+            }
+            .YesButton {
+                display:none;
+                width: 100px;
+                height: 35px;
+                font-weight: bold;
+                border-radius: 10px;
+            }
+            .NoButton {      
+                display:none;
+                width: 100px;
+                height: 35px;
+                font-weight: bold;
+                border-radius: 10px;
+            }
+            .Error {
+                display: none;
+                color: firebrick;
+                font-weight: bold;
+            }
+            #DescriptionDIV {
+                width: 14vw;
+                position: absolute;
+                bottom: 10px;
+                left: 5px;
+            }
+        </style>
+    </head>
+    <body onunload = "saveProgress()">
+        <button onclick = "goToGame()" id = "BackButton">BACK</button>
+        <div id = "Information">
+            <div id = "InfoStuff">
+                <h1 id = "Money"></h1>
+                <h1 id = "Lemon"></h1>
+            </div>
+            <div id = "DescriptionDIV">
+                <h1 id = "DescriptionTitle"></h1>
+                <h2 id = "Description"></h2>
+            </div>
+        </div>
+        <div id = "ShopItems">
+            <div class = "ItemDIV" id = "MoneyUpgradeDIV">
+                <h1 id = "MoneyUpgradeTitle"></h1>
+                <h2 class = "PriceTitle" id = "MoneyPrice"></h2>
+                <h2 class = "Error" id = "MoneyError">Not Enough Funds</h2>
+                <button class = "BuyButton" id = "BuyMoneyUpgrade" onclick = "buy(1)">Buy</button>
+                <button class = "YesButton" id = "MoneyYesButton" onclick = "yes(1)">Yes</button>
+                <button class = "NoButton" id = "MoneyNoButton" onclick = "no(1)">No</button>
+            </div>
+
+            <div class = "ItemDIV" id = "LemonUpgradeDIV">
+                <h1 id = "LemonUpgradeTitle"></h1>
+                <h2 class = "PriceTitle" id = "LemonPrice"></h2>
+                <h2 class = "Error" id = "LemonError">Not Enough Funds</h2>
+                <button class = "BuyButton" id = "BuyLemonUpgrade" onclick = "buy(2)">Buy</button>
+                <button class = "YesButton" id = "LemonYesButton" onclick = "yes(2)">Yes</button>
+                <button class = "NoButton" id = "LemonNoButton" onclick = "no(2)">No</button>
+            </div>
+
+            <div class = "ItemDIV" id = "WaterCapUpgradeDIV">
+                <h1 id = "WaterCapUpgradeTitle"></h1>
+                <h2 class = "PriceTitle" id = "WaterCapPrice"></h2>
+                <h2 class = "Error" id = "WaterCapError">Not Enough Funds</h2>
+                <button class = "BuyButton" id = "BuyWaterCapUpgrade" onclick = "buy(3)">Buy</button>
+                <button class = "YesButton" id = "WaterCapYesButton" onclick = yes(3)>Yes</button>
+                <button class = "NoButton" id = "WaterCapNoButton" onclick = "no(3)">No</button>
+            </div>
+
+            <div class = "ItemDIV" id = "GrowingUpgradeDIV">
+                <h1 id = "GrowUpgradeTitle"></h1>
+                <h2 class = "PriceTitle" id = "GrowPrice"></h2>
+                <h2 class = "Error" id = "GrowError">Not Enough Funds</h2>
+                <button class = "BuyButton" id = "BuyGrowUpgrade" onclick = "buy(4)">Buy</button>
+                <button class = "YesButton" id = "GrowYesButton" onclick = "yes(4)">Yes</button>
+                <button class = "NoButton" id = "GrowNoButton" onclick = "no(4)">No</button>
+            </div>
+
+            <div class = "ItemDIV" id = "RotUpgradeDIV">
+                <h1 id = "RotUpgradeTitle"></h1>
+                <h2 class = "PriceTitle" id = "RotPrice"></h2>
+                <h2 class = "Error" id = "RotError">Not Enough Funds</h2>
+                <button class = "BuyButton" id = "BuyRotUpgrade" onclick = "buy(5)">Buy</button>
+                <button class = "YesButton" id = "RotYesButton" onclick = "yes(5)">Yes</button>
+                <button class = "NoButton" id = "RotNoButton" onclick = "no(5)">No</button>
+            </div>
+
+            <div class = "ItemDIV" id = "DehydrationUpgradeDIV">
+                <h1 id = "DehydrationUpgradeTitle"></h1>
+                <h2 class = "PriceTitle" id = "DehydrationPrice"></h2>
+                <h2 class = "Error" id = "DehydrationError">Not Enough Funds</h2>
+                <button class = "BuyButton" id = "BuyDehydrationUpgrade" onclick = "buy(6)">Buy</button>
+                <button class = "YesButton" id = "DehydrationYesButton" onclick = "yes(6)">Yes</button>
+                <button class = "NoButton" id = "DehydrationNoButton"onclick = "no(6)">No</button>
+            </div>
+        </div>
+        <script>
+            // Getting Info Needed
+            var money = parseInt(localStorage.getItem("Money"))
+            var lemon = parseInt(localStorage.getItem("Lemon"))
+            var waterCapacity = parseInt(localStorage.getItem("WaterCapacity"))
+
+            // Upgrade List
+            let upgradeText = localStorage.getItem("Upgrades")
+            var upgradeList = upgradeText.split(",")
+
+            // Music
+            let ShopBackgroundMusic;
+
+            // Item Stages
+            let moneyStage;
+            let lemonStage;
+            let waterStage;
+            let growStage;
+            let rotStage;
+            let dehydrateStage;
+
+            // Preload
+            function preload() {
+                ShopBackgroundMusic = loadSound("Shop Background Music.mp3")
+            }
+
+            // Check Upgrades
+            function checkUpgrade() {
+                // Money Upgrades
+                if ((upgradeList.includes("Money Upgrade I") == true) || (upgradeList.includes("Money Upgrade II") == true) || (upgradeList.includes("Money Upgrade III") == true)) {
+                    if (upgradeList.includes("Money Upgrade I") == true) {
+                        document.getElementById("MoneyUpgradeTitle").innerHTML = "Money Upgrade II"
+                        document.getElementById("MoneyPrice").innerHTML = "$50 and 30 Lemons"
+                        moneyStage = 2
+                        if (upgradeList.includes("Money Upgrade II") == true) {
+                            document.getElementById("MoneyUpgradeTitle").innerHTML = "Money Upgrade III"
+                            document.getElementById("MoneyPrice").innerHTML = "$65 and 45 Lemons"
+                            moneyStage = 3
+                            if (upgradeList.includes("Money Upgrade III") == true) {
+                                document.getElementById("MoneyUpgradeTitle").style.display = "none"
+                                document.getElementById("MoneyPrice").style.display = "none"
+                                document.getElementById("BuyMoneyUpgrade").style.display = "none"
+                                document.getElementById("MoneyUpgradeDIV").style.backgroundImage = "url('Sold.png')"
+                                moneyStage = 0
+                            }
+                        }
+                    }
+                }
+                else {
+                    document.getElementById("MoneyUpgradeTitle").innerHTML = "Money Upgrade I"
+                    document.getElementById("MoneyPrice").innerHTML = "$40 and 20 Lemons"
+                    moneyStage = 1
+                }
+
+                // Lemon Upgrades
+                if ((upgradeList.includes("Lemon Upgrade I")) || (upgradeList.includes("Lemon Upgrade II")) || (upgradeList.includes("Lemon Upgrade III"))) {
+                    if (upgradeList.includes("Lemon Upgrade I")) {
+                        document.getElementById("LemonUpgradeTitle").innerHTML = "Lemon Upgrade II"
+                        document.getElementById("LemonPrice").innerHTML = "$60 and 30 Lemons"
+                        lemonStage = 2
+                        if (upgradeList.includes("Lemon Upgrade II")) {
+                            document.getElementById("LemonUpgradeTitle").innerHTML = "Lemon Upgrade III"
+                            document.getElementById("LemonPrice").innerHTML = "$70 and 35 Lemons"
+                            lemonStage = 3
+                            if (upgradeList.includes("Lemon Upgrade III")) {
+                                document.getElementById("LemonUpgradeTitle").style.display = "none"
+                                document.getElementById("LemonPrice").style.display = "none"
+                                document.getElementById("BuyLemonUpgrade").style.display = "none"
+                                document.getElementById("LemonUpgradeDIV").style.backgroundImage = "url('Sold.png')"
+                                lemonStage = 0
+                            }
+                        }
+                    }
+                }
+                else {
+                    document.getElementById("LemonUpgradeTitle").innerHTML = "Lemon Upgrade I"
+                    document.getElementById("LemonPrice").innerHTML = "$50 and 25 Lemons"
+                    lemonStage = 1
+                }
+
+                // Water Capacity Upgrades
+                if ((upgradeList.includes("Water Capacity Upgrade I")) || (upgradeList.includes("Water Capacity Upgrade II"))) {
+                    if (upgradeList.includes("Water Capacity Upgrade I")) {
+                        document.getElementById("WaterCapUpgradeTitle").innerHTML = "Water Capacity Upgrade II"
+                        document.getElementById("WaterCapPrice").innerHTML = "$35 and 25 Lemons"
+                        waterStage = 2
+                        if (upgradeList.includes("Water Capacity Upgrade II")) {
+                            document.getElementById("WaterCapUpgradeTitle").style.display = "none"
+                            document.getElementById("WaterCapPrice").style.display = "none"
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "none"
+                            document.getElementById("WaterCapUpgradeDIV").style.backgroundImage = "url('Sold.png')"
+                            waterStage = 0
+                        }
+                    }
+                }
+                else {
+                    document.getElementById("WaterCapUpgradeTitle").innerHTML = "Water Capacity Upgrade I"
+                    document.getElementById("WaterCapPrice").innerHTML = "$25 and 15 Lemons"
+                    waterStage = 1
+                }
+
+                // Grow Upgrades
+                if (upgradeList.includes("Growth Time Upgrade")) {
+                    document.getElementById("GrowUpgradeTitle").style.display = "none"
+                    document.getElementById("GrowPrice").style.display = "none"
+                    document.getElementById("BuyGrowUpgrade").style.display = "none"
+                    document.getElementById("GrowingUpgradeDIV").style.backgroundImage = "url('Sold.png')"
+                    growStage = 0
+                }
+                else {
+                    document.getElementById("GrowUpgradeTitle").innerHTML = "Growth Time Upgrade"
+                    document.getElementById("GrowPrice").innerHTML = "$100 and 45 Lemons"
+                    growStage = 1
+                }
+
+                // Rot Upgrades
+                if (upgradeList.includes("Rot Time Upgrade")) {
+                    document.getElementById("RotUpgradeTitle").style.display = "none"
+                    document.getElementById("RotPrice").style.display = "none"
+                    document.getElementById("BuyRotUpgrade").style.display = "none"
+                    document.getElementById("RotUpgradeDIV").style.backgroundImage = "url('Sold.png')"
+                    rotStage = 0
+                }
+                else {
+                    document.getElementById("RotUpgradeTitle").innerHTML = "Rot Time Upgrade"
+                    document.getElementById("RotPrice").innerHTML = "$75 and 35 Lemons"
+                    rotStage = 1
+                }
+
+                // Dehydrate Upgrades
+                if (upgradeList.includes("Dehydrate Time Upgrade")) {
+                    document.getElementById("DehydrationUpgradeTitle").style.display = "none"
+                    document.getElementById("DehydrationPrice").style.display = "none"
+                    document.getElementById("BuyDehydrationUpgrade").style.display = "none"
+                    document.getElementById("DehydrationUpgradeDIV").style.backgroundImage = "url('Sold.png')"
+                    dehydrateStage = 0
+                }
+                else {
+                    document.getElementById("DehydrationUpgradeTitle").innerHTML = "Dehydration Time Upgrade"
+                    document.getElementById("DehydrationPrice").innerHTML = "$75 and 35 Lemons"
+                    dehydrateStage = 1
+                }
+            }
+
+            // Buy Function
+            function buy(buttonNumber) {
+                // Money
+                if (buttonNumber == 1) {
+                    if (moneyStage == 1) {
+                        if ((money >= 40) && (lemon >= 20)) {
+                            document.getElementById("BuyMoneyUpgrade").style.display = "none"
+                            document.getElementById("MoneyYesButton").style.display = "initial"
+                            document.getElementById("MoneyNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Money Upgrade I"
+                            document.getElementById("Description").innerHTML = "Increase the amount of money that you can get."
+
+                            // Resetting all the other buttons
+                            // document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            // document.getElementById("MoneyYesButton").style.display = "none"
+                            // document.getElementById("MoneyNoButton").style.display = "none"
+                            document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            document.getElementById("LemonYesButton").style.display = "none"
+                            document.getElementById("LemonNoButton").style.display = "none"
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            document.getElementById("WaterCapYesButton").style.display = "none"
+                            document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyMoneyUpgrade").style.display = "none"
+                            document.getElementById("MoneyError").style.display = "initial"
+                            setTimeout(()=>{
+                                document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                                document.getElementById("MoneyError").style.display = "none"
+                            },1500)
+                        }
+                    }
+
+                    if (moneyStage == 2) {
+                        if ((money >= 50) && (lemon >= 30)) {
+                            document.getElementById("BuyMoneyUpgrade").style.display = "none"
+                            document.getElementById("MoneyYesButton").style.display = "initial"
+                            document.getElementById("MoneyNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Money Upgrade II"
+                            document.getElementById("Description").innerHTML = "Increase the amount of money that you can get."
+
+                            // Resetting all the other buttons
+                            // document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            // document.getElementById("MoneyYesButton").style.display = "none"
+                            // document.getElementById("MoneyNoButton").style.display = "none"
+                            document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            document.getElementById("LemonYesButton").style.display = "none"
+                            document.getElementById("LemonNoButton").style.display = "none"
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            document.getElementById("WaterCapYesButton").style.display = "none"
+                            document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyMoneyUpgrade").style.display = "none"
+                            document.getElementById("MoneyError").style.display = "initial"
+                            setTimeout(()=>{
+                                document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                                document.getElementById("MoneyError").style.display = "none"
+                            },1500)
+                        }
+                    }
+
+                    if (moneyStage == 3) {
+                        if ((money >= 65) && (lemon >= 45)) {
+                            document.getElementById("BuyMoneyUpgrade").style.display = "none"
+                            document.getElementById("MoneyYesButton").style.display = "initial"
+                            document.getElementById("MoneyNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Money Upgrade III"
+                            document.getElementById("Description").innerHTML = "Increase the amount of money that you can get."
+
+                            // Resetting all the other buttons
+                            // document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            // document.getElementById("MoneyYesButton").style.display = "none"
+                            // document.getElementById("MoneyNoButton").style.display = "none"
+                            document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            document.getElementById("LemonYesButton").style.display = "none"
+                            document.getElementById("LemonNoButton").style.display = "none"
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            document.getElementById("WaterCapYesButton").style.display = "none"
+                            document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyMoneyUpgrade").style.display = "none"
+                            document.getElementById("MoneyError").style.display = "initial"
+                            setTimeout(()=>{
+                                document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                                document.getElementById("MoneyError").style.display = "none"
+                            },1500)
+                        }
+                    }
+                }
+
+                // Lemon
+                if (buttonNumber == 2) {
+                    if (lemonStage == 1) {
+                        if ((money >= 50) && (lemon >= 25)) {
+                            document.getElementById("BuyLemonUpgrade").style.display = "none"
+                            document.getElementById("LemonYesButton").style.display = "initial"
+                            document.getElementById("LemonNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Lemon Upgrade I"
+                            document.getElementById("Description").innerHTML = "Increase the amount of lemons that you can get."
+
+                            // Resetting all the other buttons
+                            document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            document.getElementById("MoneyYesButton").style.display = "none"
+                            document.getElementById("MoneyNoButton").style.display = "none"
+                            // document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            // document.getElementById("LemonYesButton").style.display = "none"
+                            // document.getElementById("LemonNoButton").style.display = "none"
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            document.getElementById("WaterCapYesButton").style.display = "none"
+                            document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyLemonUpgrade").style.display = "none"
+                            document.getElementById("LemonError").style.display = "initial"
+                            setTimeout(()=> {
+                                document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                                document.getElementById("LemonError").style.display = "none"
+                            },1500)
+                        }
+                    }
+
+                    if (lemonStage == 2) {
+                        if ((money >= 60) && (lemon >= 30)) {
+                            document.getElementById("BuyLemonUpgrade").style.display = "none"
+                            document.getElementById("LemonYesButton").style.display = "initial"
+                            document.getElementById("LemonNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Lemon Upgrade II"
+                            document.getElementById("Description").innerHTML = "Increase the amount of lemons that you can get."
+
+                            // Resetting all the other buttons
+                            document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            document.getElementById("MoneyYesButton").style.display = "none"
+                            document.getElementById("MoneyNoButton").style.display = "none"
+                            // document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            // document.getElementById("LemonYesButton").style.display = "none"
+                            // document.getElementById("LemonNoButton").style.display = "none"
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            document.getElementById("WaterCapYesButton").style.display = "none"
+                            document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyLemonUpgrade").style.display = "none"
+                            document.getElementById("LemonError").style.display = "initial"
+                            setTimeout(()=> {
+                                document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                                document.getElementById("LemonError").style.display = "none"
+                            },1500)
+                        }
+                    }
+
+                    if (lemonStage == 3) {
+                        if ((money >= 70) && (lemon >= 35)) {
+                            document.getElementById("BuyLemonUpgrade").style.display = "none"
+                            document.getElementById("LemonYesButton").style.display = "initial"
+                            document.getElementById("LemonNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Lemon Upgrade III"
+                            document.getElementById("Description").innerHTML = "Increase the amount of lemons that you can get."
+
+                            // Resetting all the other buttons
+                            document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            document.getElementById("MoneyYesButton").style.display = "none"
+                            document.getElementById("MoneyNoButton").style.display = "none"
+                            // document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            // document.getElementById("LemonYesButton").style.display = "none"
+                            // document.getElementById("LemonNoButton").style.display = "none"
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            document.getElementById("WaterCapYesButton").style.display = "none"
+                            document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyLemonUpgrade").style.display = "none"
+                            document.getElementById("LemonError").style.display = "initial"
+                            setTimeout(()=> {
+                                document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                                document.getElementById("LemonError").style.display = "none"
+                            },1500)
+                        }
+                    }
+                }
+
+                // Water Capacity
+                if (buttonNumber == 3) {
+                    if (waterStage == 1) {
+                        if ((money >= 25) && (lemon >= 15)) {
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "none"
+                            document.getElementById("WaterCapYesButton").style.display = "initial"
+                            document.getElementById("WaterCapNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Water Capacity Upgrade I"
+                            document.getElementById("Description").innerHTML = "Increase the amount of water that you can hold."
+
+                            // Resetting all the other buttons
+                            document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            document.getElementById("MoneyYesButton").style.display = "none"
+                            document.getElementById("MoneyNoButton").style.display = "none"
+                            document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            document.getElementById("LemonYesButton").style.display = "none"
+                            document.getElementById("LemonNoButton").style.display = "none"
+                            // document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            // document.getElementById("WaterCapYesButton").style.display = "none"
+                            // document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "none"
+                            document.getElementById("WaterCapError").style.display = "initial"
+                            setTimeout(()=>{
+                                document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                                document.getElementById("WaterCapError").style.display = "none"
+                            },1500)
+                        }
+                    }
+                    if (waterStage == 2) {
+                        if ((money >= 35) && (lemon >= 25)) {
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "none"
+                            document.getElementById("WaterCapYesButton").style.display = "initial"
+                            document.getElementById("WaterCapNoButton").style.display = "initial"
+                            document.getElementById("DescriptionTitle").innerHTML = "Water Capacity Upgrade II"
+                            document.getElementById("Description").innerHTML = "Increase the amount of water that you can hold."
+
+                            // Resetting all the other buttons
+                            document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                            document.getElementById("MoneyYesButton").style.display = "none"
+                            document.getElementById("MoneyNoButton").style.display = "none"
+                            document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                            document.getElementById("LemonYesButton").style.display = "none"
+                            document.getElementById("LemonNoButton").style.display = "none"
+                            // document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                            // document.getElementById("WaterCapYesButton").style.display = "none"
+                            // document.getElementById("WaterCapNoButton").style.display = "none"
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowYesButton").style.display = "none"
+                            document.getElementById("GrowNoButton").style.display = "none"
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotYesButton").style.display = "none"
+                            document.getElementById("RotNoButton").style.display = "none"
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationYesButton").style.display = "none"
+                            document.getElementById("DehydrationNoButton").style.display = "none"
+                        }
+                        else {
+                            document.getElementById("BuyWaterCapUpgrade").style.display = "none"
+                            document.getElementById("WaterCapError").style.display = "initial"
+                            setTimeout(()=>{
+                                document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                                document.getElementById("WaterCapError").style.display = "none"
+                            },1500)
+                        }
+                    }
+                }
+
+                // Grow Time
+                if (buttonNumber == 4) {
+                    if ((money >= 100) && (lemon >= 45)) {
+                        document.getElementById("BuyGrowUpgrade").style.display = "none"
+                        document.getElementById("GrowYesButton").style.display = "initial"
+                        document.getElementById("GrowNoButton").style.display = "initial"
+                        document.getElementById("DescriptionTitle").innerHTML = "Growth Time Upgrade"
+                        document.getElementById("Description").innerHTML = "Make the chances of fast growth increase."
+                        
+                        // Resetting all the other buttons
+                        document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                        document.getElementById("MoneyYesButton").style.display = "none"
+                        document.getElementById("MoneyNoButton").style.display = "none"
+                        document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                        document.getElementById("LemonYesButton").style.display = "none"
+                        document.getElementById("LemonNoButton").style.display = "none"
+                        document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                        document.getElementById("WaterCapYesButton").style.display = "none"
+                        document.getElementById("WaterCapNoButton").style.display = "none"
+                        // document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                        // document.getElementById("GrowYesButton").style.display = "none"
+                        // document.getElementById("GrowNoButton").style.display = "none"
+                        document.getElementById("BuyRotUpgrade").style.display = "initial"
+                        document.getElementById("RotYesButton").style.display = "none"
+                        document.getElementById("RotNoButton").style.display = "none"
+                        document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                        document.getElementById("DehydrationYesButton").style.display = "none"
+                        document.getElementById("DehydrationNoButton").style.display = "none"
+                    }
+                    else {
+                        document.getElementById("BuyGrowUpgrade").style.display = "none"
+                        document.getElementById("GrowError").style.display = "initial"
+                        setTimeout(()=>{
+                            document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                            document.getElementById("GrowError").style.display = "none"
+                        },1500)
+                    }
+                }
+
+                // Rot Time
+                if (buttonNumber == 5) {
+                    if ((money >= 75) && (lemon >= 35)) {
+                        document.getElementById("BuyRotUpgrade").style.display = "none"
+                        document.getElementById("RotYesButton").style.display = "initial"
+                        document.getElementById("RotNoButton").style.display = "initial"
+                        document.getElementById("DescriptionTitle").innerHTML = "Rot Time Upgrade"
+                        document.getElementById("Description").innerHTML = "Make the chances of fast rotting decrease."
+
+                        // Resetting all the other buttons
+                        document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                        document.getElementById("MoneyYesButton").style.display = "none"
+                        document.getElementById("MoneyNoButton").style.display = "none"
+                        document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                        document.getElementById("LemonYesButton").style.display = "none"
+                        document.getElementById("LemonNoButton").style.display = "none"
+                        document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                        document.getElementById("WaterCapYesButton").style.display = "none"
+                        document.getElementById("WaterCapNoButton").style.display = "none"
+                        document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                        document.getElementById("GrowYesButton").style.display = "none"
+                        document.getElementById("GrowNoButton").style.display = "none"
+                        // document.getElementById("BuyRotUpgrade").style.display = "initial"
+                        // document.getElementById("RotYesButton").style.display = "none"
+                        // document.getElementById("RotNoButton").style.display = "none"
+                        document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                        document.getElementById("DehydrationYesButton").style.display = "none"
+                        document.getElementById("DehydrationNoButton").style.display = "none"
+                    }
+                    else {
+                        document.getElementById("BuyRotUpgrade").style.display = "none"
+                        document.getElementById("RotError").style.display = "initial"
+                        setTimeout(()=>{
+                            document.getElementById("BuyRotUpgrade").style.display = "initial"
+                            document.getElementById("RotError").style.display = "none"
+                        },1500)
+                    }
+                }
+
+                // Dehydration Time
+                if (buttonNumber == 6) {
+                    if ((money >= 75) && (lemon >= 35)) {
+                        document.getElementById("BuyDehydrationUpgrade").style.display = "none"
+                        document.getElementById("DehydrationYesButton").style.display = "initial"
+                        document.getElementById("DehydrationNoButton").style.display = "initial"
+                        document.getElementById("DescriptionTitle").innerHTML = "Dehydration Time Upgrade"
+                        document.getElementById("Description").innerHTML = "Make the chances of fast dehydration decrease."
+
+                        // Resetting all the other buttons
+                        document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                        document.getElementById("MoneyYesButton").style.display = "none"
+                        document.getElementById("MoneyNoButton").style.display = "none"
+                        document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                        document.getElementById("LemonYesButton").style.display = "none"
+                        document.getElementById("LemonNoButton").style.display = "none"
+                        document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                        document.getElementById("WaterCapYesButton").style.display = "none"
+                        document.getElementById("WaterCapNoButton").style.display = "none"
+                        document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                        document.getElementById("GrowYesButton").style.display = "none"
+                        document.getElementById("GrowNoButton").style.display = "none"
+                        document.getElementById("BuyRotUpgrade").style.display = "initial"
+                        document.getElementById("RotYesButton").style.display = "none"
+                        document.getElementById("RotNoButton").style.display = "none"
+                        // document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                        // document.getElementById("DehydrationYesButton").style.display = "none"
+                        // document.getElementById("DehydrationNoButton").style.display = "none"
+                    }
+                    else {
+                        document.getElementById("BuyDehydrationUpgrade").style.display = "none"
+                        document.getElementById("DehydrationError").style.display = "initial"
+                        setTimeout(()=>{
+                            document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                            document.getElementById("DehydrationError").style.display = "none"
+                        },1500)
+                    }
+                }
+            }
+
+            // No Function
+            function no(buttonNumber) {
+                // Money
+                if (buttonNumber == 1) {
+                    document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                    document.getElementById("MoneyYesButton").style.display = "none"
+                    document.getElementById("MoneyNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+
+                // Lemon
+                if (buttonNumber == 2) {
+                    document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                    document.getElementById("LemonYesButton").style.display = "none"
+                    document.getElementById("LemonNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+
+                // Water Capacity
+                if (buttonNumber == 3) {
+                    document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                    document.getElementById("WaterCapYesButton").style.display = "none"
+                    document.getElementById("WaterCapNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+
+                // Grow Time
+                if (buttonNumber == 4) {
+                    document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                    document.getElementById("GrowYesButton").style.display = "none"
+                    document.getElementById("GrowNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+
+                // Rot Time
+                if (buttonNumber == 5) {
+                    document.getElementById("BuyRotUpgrade").style.display = "initial"
+                    document.getElementById("RotYesButton").style.display = "none"
+                    document.getElementById("RotNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+
+                // Dehydration Time
+                if (buttonNumber == 6) {
+                    document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                    document.getElementById("DehydrationYesButton").style.display = "none"
+                    document.getElementById("DehydrationNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+            }
+
+            // Yes Function
+            function yes(buttonNumber) {
+                // Money
+                if (buttonNumber == 1) {
+                    if (moneyStage == 1) {
+                        money -= 40
+                        lemon -= 20
+                        upgradeList.push("Money Upgrade I")
+                        document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                        document.getElementById("MoneyYesButton").style.display = "none"
+                        document.getElementById("MoneyNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                    }
+                    if (moneyStage == 2) {
+                        money -= 50
+                        lemon -= 30
+                        upgradeList.push("Money Upgrade II")
+                        document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                        document.getElementById("MoneyYesButton").style.display = "none"
+                        document.getElementById("MoneyNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                    }
+                    if (moneyStage == 3) {
+                        money -= 60
+                        lemon -= 45
+                        upgradeList.push("Money Upgrade III")
+                        document.getElementById("BuyMoneyUpgrade").style.display = "initial"
+                        document.getElementById("MoneyYesButton").style.display = "none"
+                        document.getElementById("MoneyNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                    }
+                }
+
+                // Lemon
+                if (buttonNumber == 2) {
+                    if (lemonStage == 1) {
+                        money -= 50
+                        lemon -= 25
+                        upgradeList.push("Lemon Upgrade I")
+                        document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                        document.getElementById("LemonYesButton").style.display = "none"
+                        document.getElementById("LemonNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                    }
+                    if (lemonStage == 2) {
+                        money -= 60
+                        lemon -= 30
+                        upgradeList.push("Lemon Upgrade II")
+                        document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                        document.getElementById("LemonYesButton").style.display = "none"
+                        document.getElementById("LemonNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                    }
+                    if (lemonStage == 3) {
+                        money -= 70
+                        lemon -= 35
+                        upgradeList.push("Lemon Upgrade III")
+                        document.getElementById("BuyLemonUpgrade").style.display = "initial"
+                        document.getElementById("LemonYesButton").style.display = "none"
+                        document.getElementById("LemonNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                    }
+                }
+
+                // Water
+                if (buttonNumber == 3) {
+                    if (waterStage == 1) {
+                        money -= 25
+                        lemon -= 15
+                        upgradeList.push("Water Capacity Upgrade I")
+                        document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                        document.getElementById("WaterCapYesButton").style.display = "none"
+                        document.getElementById("WaterCapNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                        waterCapacity = 125
+                    }
+                    if (waterStage == 2) {
+                        money -= 35
+                        lemon -= 25
+                        upgradeList.push("Water Capacity Upgrade II")
+                        waterCapacity = 150
+                        document.getElementById("BuyWaterCapUpgrade").style.display = "initial"
+                        document.getElementById("WaterCapYesButton").style.display = "none"
+                        document.getElementById("WaterCapNoButton").style.display = "none"
+                        document.getElementById("DescriptionTitle").innerHTML = ""
+                        document.getElementById("Description").innerHTML = ""
+                    }
+                }
+
+                // Grow
+                if (buttonNumber == 4) {
+                    money -= 100
+                    lemon -= 45
+                    upgradeList.push("Growth Time Upgrade")
+                    document.getElementById("BuyGrowUpgrade").style.display = "initial"
+                    document.getElementById("GrowYesButton").style.display = "none"
+                    document.getElementById("GrowNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+
+                // Rot
+                if (buttonNumber == 5) {
+                    money -= 75
+                    lemon -= 35
+                    upgradeList.push("Rot Time Upgrade")
+                    document.getElementById("BuyRotUpgrade").style.display = "initial"
+                    document.getElementById("RotYesButton").style.display = "none"
+                    document.getElementById("RotNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+
+                // Dehydration
+                if (buttonNumber == 6) {
+                    money -= 75
+                    lemon -= 35
+                    upgradeList.push("Dehydrate Time Upgrade")
+                    document.getElementById("BuyDehydrationUpgrade").style.display = "initial"
+                    document.getElementById("DehydrationYesButton").style.display = "none"
+                    document.getElementById("DehydrationNoButton").style.display = "none"
+                    document.getElementById("DescriptionTitle").innerHTML = ""
+                    document.getElementById("Description").innerHTML = ""
+                }
+            }
+
+            function draw() {
+                // Initial Setup
+                document.getElementById("Money").innerHTML = "Money: $" + money
+                document.getElementById("Lemon").innerHTML = "Lemon: " + lemon
+
+                // Check the upgrades
+                checkUpgrade()
+
+                // Music
+                if (ShopBackgroundMusic.isPlaying() == false) {
+                    ShopBackgroundMusic.play()
+                }
+            }
+
+            // Plot Variables: [Stage,GrowingTimer,RottingTimer,DehydrationTimer]
+            var plot1Variables = [localStorage.getItem("Plot1Stage"),parseInt(localStorage.getItem("Plot1Grow")),parseInt(localStorage.getItem("Plot1Rot")),parseInt(localStorage.getItem("Plot1Dehydrate"))]
+
+            var plot2Variables = [localStorage.getItem("Plot2Stage"),parseInt(localStorage.getItem("Plot2Grow")),parseInt(localStorage.getItem("Plot2Rot")),parseInt(localStorage.getItem("Plot2Dehydrate"))]
+
+            var plot3Variables = [localStorage.getItem("Plot3Stage"),parseInt(localStorage.getItem("Plot3Grow")),parseInt(localStorage.getItem("Plot3Rot")),parseInt(localStorage.getItem("Plot3Dehydrate"))]
+
+            var plot4Variables = [localStorage.getItem("Plot4Stage"),parseInt(localStorage.getItem("Plot4Grow")),parseInt(localStorage.getItem("Plot4Rot")),parseInt(localStorage.getItem("Plot4Dehydrate"))]
+
+            var plot5Variables = [localStorage.getItem("Plot5Stage"),parseInt(localStorage.getItem("Plot5Grow")),parseInt(localStorage.getItem("Plot5Rot")),parseInt(localStorage.getItem("Plot5Dehydrate"))]
+
+            // Plot continuation
+            // Plot 1
+            if (plot1Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[1] > 0)) {
+                        plot1Variables[1] -= 1
+                        if ((plot1Variables[1] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[1] = 0
+                            plot1Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[2] > 0)) {
+                        plot1Variables[2] -= 1
+                        if ((plot1Variables [2] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[2] = 0
+                            plot1Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot1Variables[0] == "plant") && (plot1Variables[3] > 0)) {
+                        plot1Variables[3] -= 1
+                        if ((plot1Variables [3] <= 0) && (plot1Variables[0] == "plant")) {
+                            plot1Variables[3] = 0
+                            plot1Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 2
+            if (plot2Variables[0] == "plant") {
+                let plot2Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[1] > 0)) {
+                        plot2Variables[1] -= 1
+                        if ((plot2Variables[1] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[1] = 0
+                            plot2Variables[0] = "grown"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[2] > 0)) {
+                        plot2Variables[2] -= 1
+                        if ((plot2Variables [2] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[2] = 0
+                            plot2Variables[0] = "rot"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                    if ((plot2Variables[0] == "plant") && (plot2Variables[3] > 0)) {
+                        plot2Variables[3] -= 1
+                        if ((plot2Variables [3] <= 0) && (plot2Variables[0] == "plant")) {
+                            plot2Variables[3] = 0
+                            plot2Variables[0] = "dehydrate"
+                            clearInterval(plot2Timer)
+                        }
+                    }
+                },1000)
+            }
+           
+            // Plot 3
+            if (plot3Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[1] > 0)) {
+                        plot3Variables[1] -= 1
+                        if ((plot3Variables[1] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[1] = 0
+                            plot3Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[2] > 0)) {
+                        plot3Variables[2] -= 1
+                        if ((plot3Variables [2] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[2] = 0
+                            plot3Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot3Variables[0] == "plant") && (plot3Variables[3] > 0)) {
+                        plot3Variables[3] -= 1
+                        if ((plot3Variables [3] <= 0) && (plot3Variables[0] == "plant")) {
+                            plot3Variables[3] = 0
+                            plot3Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 4
+            if (plot4Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[1] > 0)) {
+                        plot4Variables[1] -= 1
+                        if ((plot4Variables[1] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[1] = 0
+                            plot4Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[2] > 0)) {
+                        plot4Variables[2] -= 1
+                        if ((plot4Variables [2] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[2] = 0
+                            plot4Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot4Variables[0] == "plant") && (plot4Variables[3] > 0)) {
+                        plot4Variables[3] -= 1
+                        if ((plot4Variables [3] <= 0) && (plot4Variables[0] == "plant")) {
+                            plot4Variables[3] = 0
+                            plot4Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Plot 5
+            if (plot5Variables[0] == "plant") {
+                let plot1Timer = setInterval(()=>{
+                    // Make sure that you can rot
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[1] > 0)) {
+                        plot5Variables[1] -= 1
+                        if ((plot5Variables[1] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[1] = 0
+                            plot5Variables[0] = "grown"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[2] > 0)) {
+                        plot5Variables[2] -= 1
+                        if ((plot5Variables [2] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[2] = 0
+                            plot5Variables[0] = "rot"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                    if ((plot5Variables[0] == "plant") && (plot5Variables[3] > 0)) {
+                        plot5Variables[3] -= 1
+                        if ((plot5Variables [3] <= 0) && (plot5Variables[0] == "plant")) {
+                            plot5Variables[3] = 0
+                            plot5Variables[0] = "dehydrate"
+                            clearInterval(plot1Timer)
+                        }
+                    }
+                },1000)
+            }
+
+            // Going Back to the Game
+            function saveProgress() {
+                // Saving all the changed data
+                // Plot 1
+                localStorage.setItem("Plot1Stage",plot1Variables[0])
+                localStorage.setItem("Plot1Grow",plot1Variables[1])
+                localStorage.setItem("Plot1Rot",plot1Variables[2])
+                localStorage.setItem("Plot1Dehydrate",plot1Variables[3])
+
+                // Plot 2
+                localStorage.setItem("Plot2Stage",plot2Variables[0])
+                localStorage.setItem("Plot2Grow",plot2Variables[1])
+                localStorage.setItem("Plot2Rot",plot2Variables[2])
+                localStorage.setItem("Plot2Dehydrate",plot2Variables[3])
+
+                // Plot 3
+                localStorage.setItem("Plot3Stage",plot3Variables[0])
+                localStorage.setItem("Plot3Grow",plot3Variables[1])
+                localStorage.setItem("Plot3Rot",plot3Variables[2])
+                localStorage.setItem("Plot3Dehydrate",plot3Variables[3])
+
+                // Plot 4
+                localStorage.setItem("Plot4Stage",plot4Variables[0])
+                localStorage.setItem("Plot4Grow",plot4Variables[1])
+                localStorage.setItem("Plot4Rot",plot4Variables[2])
+                localStorage.setItem("Plot4Dehydrate",plot4Variables[3])
+
+                // Plot 5
+                localStorage.setItem("Plot5Stage",plot5Variables[0])
+                localStorage.setItem("Plot5Grow",plot5Variables[1])
+                localStorage.setItem("Plot5Rot",plot5Variables[2])
+                localStorage.setItem("Plot5Dehydrate",plot5Variables[3])
+
+                // Water Variables
+                localStorage.setItem("WaterCapacity",waterCapacity)
+
+                // Money and Lemon Variables
+                localStorage.setItem("Money",money)
+                localStorage.setItem("Lemon",lemon)
+
+                // Upgrade Variables
+                localStorage.setItem("Upgrades",upgradeList)
+            }
+
+            function goToGame() {
+                saveProgress()
+                location.href = "Game.html"
+            }
+            // Blackjack lowkey sounds like such a good game idea now T-T
+        </script>
+    </body>
+</html>

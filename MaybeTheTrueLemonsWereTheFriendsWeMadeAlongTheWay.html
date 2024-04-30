@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <title>You Won!!!</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script defer src="https://unpkg.com/p5.collide2d"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-image: url("Lemon Background.png");
+                background-repeat: repeat;
+            }
+            #TheTrueLemons {
+                background-image: url("The Real Lemons.png");
+                width: 500px;
+                height: 500px;
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translate(-50%,-100%);
+            }
+            #TheTrueMessage {
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-size: 40px;
+                color: black;
+                font-weight: bold;
+                background-color: white;
+                border-color: black;
+                border-style: groove;
+                border-width: 10px;
+            }
+            #TheTrueHolder {
+                text-align: center;
+                width: 100vw;
+                position: absolute;
+                top: 30px;
+            }
+            #DialougeDIV {
+                margin-right: auto;
+                margin-left: auto;
+                height: 100vh;
+                width: 55%;
+                text-align: center;
+            }
+            #Dialouge {
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-size: 35px;
+                font-weight: bold;
+                background-color: white;
+                line-height: 45px;
+                margin: 0;
+            }
+            #Next {
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-size: 40px;
+                border-width: 5px;
+                border-color: grey;
+                background-color: rgb(85, 85, 85);
+                color: white;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+            #Back {
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-size: 40px;
+                border-width: 5px;
+                border-color: grey;
+                background-color: rgb(85, 85, 85);
+                color: white;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "TheTrueHolder">
+            <p id = "TheTrueMessage">The True Lemons were friends we made along the way</p>
+        </div>
+        
+        <div id = "TheTrueLemons"></div>
+
+        <div id = "DialougeDIV">
+            <p id = "Dialouge">Even though as you were told, he refuses to turn you back into a human. Leaving you as a lemon for the rest of your days. You cry for days, sad and alone you walk around your old lemon farm. As you walk you find to see that another farmer is standing in your abandoned lemon farm, your rival. You both talk and find out that you have a lot in common, like farming. You soon forget your troubles and start your lemon farm once more. You start to feel happier and better. It doesn't matter if your a lemon because...</p>
+        </div>
+
+        <button id = "Next" onclick = "next()">Next</button>
+        <button id = "Back" onclick = "back()">Go Back to Game</button>
+
+        <script>
+            document.getElementById("TheTrueHolder").style.display = "none"
+            document.getElementById("TheTrueLemons").style.display = "none"
+            document.getElementById("Back").style.display = "none"
+
+            function next() {
+                document.getElementById("TheTrueHolder").style.display = "initial"
+                document.getElementById("TheTrueMessage").style.display = "initial"
+                document.getElementById("TheTrueLemons").style.display = "initial"
+                document.getElementById("DialougeDIV").style.display = "none"
+                document.getElementById("Next").style.display = "none"
+                document.getElementById("Back").style.display = "initial"
+            }
+
+            function back() {
+                location.href = "Game.html"
+            }
+
+            let BackgroundMusic;
+
+            function preload() {
+                BackgroundMusic = loadSound("Main Game Background Music.mp3")
+            }
+
+            function draw() {
+                if (BackgroundMusic.isPlaying() == false) {
+                    BackgroundMusic.play()
+                }
+            }
+        </script>
+    </body>
+</html>
